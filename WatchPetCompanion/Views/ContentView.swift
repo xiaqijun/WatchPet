@@ -1,10 +1,17 @@
-﻿import SwiftUI
+import SwiftUI
+import UniformTypeIdentifiers
+
+extension UTType {
+    static let watchPetPackage = UTType(filenameExtension: "watchpet") ?? .zip
+}
 
 struct ContentView: View {
     @State private var package: PetPackage?
     @State private var selectedAction: PetAction = .idle
     @State private var errorMessage: String?
+    @State private var isImporterPresented = false
     @StateObject private var syncManager = CompanionWatchSyncManager()
+    @StateObject private var library = PetPackageLibrary()
 
     var body: some View {
         NavigationStack {
@@ -12,12 +19,22 @@ struct ContentView: View {
                 if let package {
                     preview(package)
                 } else if let errorMessage {
-                    ContentUnavailableView("加载失败", systemImage: "exclamationmark.triangle", description: Text(errorMessage))
+                    ContentUnavailableView("Load failed", systemImage: "exclamationmark.triangle", description: Text(errorMessage))
                 } else {
-                    ProgressView("加载示例宠物包…")
+                    ProgressView("Loading sample pet...")
                 }
             }
             .navigationTitle("WatchPet")
+            .toolbar {
+                Button {
+                    isImporterPresented = true
+                } label: {
+                    Label("Import", systemImage: "folder.badge.plus")
+                }
+            }
+            .fileImporter(isPresented: $isImporterPresented, allowedContentTypes: [.folder, .zip, .watchPetPackage]) { result in
+                handleImport(result)
+            }
             .task { loadSamplePackage() }
         }
     }
@@ -27,7 +44,7 @@ struct ContentView: View {
             VStack(spacing: 4) {
                 Text(package.name)
                     .font(.largeTitle.bold())
-                Text("\(package.species) · \(package.style)")
+                Text("\(package.species) - \(package.style)")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
             }
@@ -43,7 +60,7 @@ struct ContentView: View {
             .frame(height: 300)
             .padding(.horizontal)
 
-            Picker("动作", selection: $selectedAction) {
+            Picker("Action", selection: $selectedAction) {
                 ForEach(package.sortedActions) { action in
                     Text(action.title).tag(action)
                 }
@@ -52,32 +69,36 @@ struct ContentView: View {
             .padding(.horizontal)
 
             List {
-                Section("同步到 Apple Watch") {
+                Section("Send to Apple Watch") {
                     Button {
                         syncManager.send(package: package, selectedAction: selectedAction)
                     } label: {
-                        Label("发送当前宠物", systemImage: "applewatch")
+                        Label("Send current pet and resources", systemImage: "applewatch")
                     }
-                    LabeledContent("配对", value: syncManager.isPaired ? "是" : "否")
-                    LabeledContent("已安装", value: syncManager.isWatchAppInstalled ? "是" : "否")
-                    LabeledContent("可实时到达", value: syncManager.isReachable ? "是" : "否")
+                    LabeledContent("Paired", value: syncManager.isPaired ? "Yes" : "No")
+                    LabeledContent("Watch app", value: syncManager.isWatchAppInstalled ? "Installed" : "Missing")
+                    LabeledContent("Reachable", value: syncManager.isReachable ? "Yes" : "No")
+                    LabeledContent("Pending files", value: "\(syncManager.pendingFileTransfers)")
                     Text(syncManager.lastStatusMessage)
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
 
-                Section("资源包") {
+                Section("Package") {
                     LabeledContent("ID", value: package.id)
-                    LabeledContent("画布", value: "\(package.canvas.width)×\(package.canvas.height)")
-                    LabeledContent("动作数", value: "\(package.animations.count)")
+                    LabeledContent("Canvas", value: "\(package.canvas.width)x\(package.canvas.height)")
+                    LabeledContent("Actions", value: "\(package.animations.count)")
+                    Text(library.lastMessage)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
                 }
 
-                Section("当前动作") {
+                Section("Selected animation") {
                     if let animation = package.animations[selectedAction] {
-                        LabeledContent("名称", value: selectedAction.title)
+                        LabeledContent("Action", value: selectedAction.title)
                         LabeledContent("FPS", value: "\(animation.fps)")
-                        LabeledContent("帧数", value: "\(animation.frameURLs.count)")
-                        LabeledContent("循环", value: animation.loop ? "是" : "否")
+                        LabeledContent("Frames", value: "\(animation.frameURLs.count)")
+                        LabeledContent("Loop", value: animation.loop ? "Yes" : "No")
                     }
                 }
             }
@@ -87,8 +108,19 @@ struct ContentView: View {
 
     private func loadSamplePackage() {
         do {
-            package = try WatchPetPackageLoader.shared.loadBundledSample()
+            package = try library.loadBundledSample()
             selectedAction = package?.sortedActions.first ?? .idle
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
+    private func handleImport(_ result: Result<URL, Error>) {
+        do {
+            let url = try result.get()
+            let imported = try library.importPackage(from: url)
+            package = imported
+            selectedAction = imported.sortedActions.first ?? .idle
         } catch {
             errorMessage = error.localizedDescription
         }

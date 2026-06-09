@@ -1,4 +1,4 @@
-﻿import SwiftUI
+import SwiftUI
 import WatchKit
 
 struct ContentView: View {
@@ -11,7 +11,7 @@ struct ContentView: View {
 
             Spacer(minLength: 2)
 
-            PetSpriteView(action: store.currentAction)
+            PetSpriteView(action: store.currentAction, importedPackage: syncManager.importedPackage)
                 .frame(width: 128, height: 128)
                 .onTapGesture {
                     store.strokePet()
@@ -23,13 +23,13 @@ struct ContentView: View {
             statusBars
 
             HStack(spacing: 8) {
-                Button("喂食") {
+                Button("Feed") {
                     store.feed()
                     WKInterfaceDevice.current().play(.success)
                 }
                 .font(.caption2)
 
-                Button("睡觉") {
+                Button("Sleep") {
                     store.sleep()
                     WKInterfaceDevice.current().play(.start)
                 }
@@ -49,7 +49,7 @@ struct ContentView: View {
                     .font(.headline)
                     .lineLimit(1)
                 if let synced = syncManager.syncedPackage {
-                    Text("来自 iPhone · \(synced.selectedAction)")
+                    Text("From iPhone - \(synced.selectedAction)")
                         .font(.system(size: 8))
                         .foregroundStyle(.secondary)
                         .lineLimit(1)
@@ -65,7 +65,7 @@ struct ContentView: View {
     private var syncSummary: some View {
         Group {
             if syncManager.syncedPackage != nil {
-                Text(syncManager.lastStatusMessage)
+                Text("\(syncManager.lastStatusMessage) - files \(syncManager.receivedFileCount)")
                     .font(.system(size: 9))
                     .foregroundStyle(.secondary)
                     .lineLimit(1)
@@ -75,9 +75,9 @@ struct ContentView: View {
 
     private var statusBars: some View {
         VStack(spacing: 3) {
-            MeterRow(label: "饱", value: store.pet.hunger, color: .orange)
-            MeterRow(label: "心", value: store.pet.mood, color: .pink)
-            MeterRow(label: "精", value: store.pet.energy, color: .blue)
+            MeterRow(label: "Hun", value: store.pet.hunger, color: .orange)
+            MeterRow(label: "Mood", value: store.pet.mood, color: .pink)
+            MeterRow(label: "Eng", value: store.pet.energy, color: .blue)
         }
     }
 }
@@ -91,7 +91,7 @@ struct MeterRow: View {
         HStack(spacing: 4) {
             Text(label)
                 .font(.system(size: 9))
-                .frame(width: 14)
+                .frame(width: 24)
             ProgressView(value: Double(value), total: 100)
                 .tint(color)
         }

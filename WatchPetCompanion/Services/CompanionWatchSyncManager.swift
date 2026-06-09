@@ -1,4 +1,4 @@
-﻿import Foundation
+import Foundation
 import WatchConnectivity
 
 @MainActor
@@ -7,7 +7,8 @@ final class CompanionWatchSyncManager: NSObject, ObservableObject {
     @Published private(set) var isPaired = false
     @Published private(set) var isWatchAppInstalled = false
     @Published private(set) var isReachable = false
-    @Published private(set) var lastStatusMessage = "尚未同步"
+    @Published private(set) var pendingFileTransfers = 0
+    @Published private(set) var lastStatusMessage = "Ready"
 
     private var session: WCSession? {
         WCSession.isSupported() ? WCSession.default : nil
@@ -20,7 +21,7 @@ final class CompanionWatchSyncManager: NSObject, ObservableObject {
 
     func activate() {
         guard let session else {
-            lastStatusMessage = "当前设备不支持 WatchConnectivity"
+            lastStatusMessage = "WatchConnectivity is not supported"
             return
         }
         session.delegate = self
@@ -29,12 +30,67 @@ final class CompanionWatchSyncManager: NSObject, ObservableObject {
     }
 
     func send(package: PetPackage, selectedAction: PetAction) {
+        sendMetadata(package: package, selectedAction: selectedAction)
+        transferResources(package: package, selectedAction: selectedAction)
+    }
+
+    func sendMetadata(package: PetPackage, selectedAction: PetAction) {
         guard let session else {
-            lastStatusMessage = "无法同步：设备不支持 WatchConnectivity"
+            lastStatusMessage = "This device does not support WatchConnectivity"
             return
         }
 
-        let payload: [String: Any] = [
+        let payload = metadataPayload(package: package, selectedAction: selectedAction)
+
+        do {
+            try session.updateApplicationContext(payload)
+            lastStatusMessage = "Queued metadata for \(package.name)"
+        } catch {
+            lastStatusMessage = "Failed to queue metadata: \(error.localizedDescription)"
+        }
+
+        guard session.isReachable else { return }
+        session.sendMessage(payload, replyHandler: { [weak self] reply in
+            Task { @MainActor in
+                let ok = (reply["ok"] as? Bool) == true
+                self?.lastStatusMessage = ok ? "Queued metadata for \(package.name)" : "Watch reply was not OK"
+            }
+        }, errorHandler: { [weak self] error in
+            Task { @MainActor in
+                self?.lastStatusMessage = "Transfer failed: \(error.localizedDescription)"
+            }
+        })
+    }
+
+    func transferResources(package: PetPackage, selectedAction: PetAction) {
+        guard let session else {
+            lastStatusMessage = "This device does not support WatchConnectivity"
+            return
+        }
+
+        do {
+            let files = try packageTransferFiles(package: package)
+            guard !files.isEmpty else {
+                lastStatusMessage = "No package files found to transfer"
+                return
+            }
+
+            for item in files {
+                var metadata = metadataPayload(package: package, selectedAction: selectedAction)
+                metadata["kind"] = "watchpet.package.file"
+                metadata["relativePath"] = item.relativePath
+                metadata["fileName"] = item.url.lastPathComponent
+                session.transferFile(item.url, metadata: metadata)
+            }
+            pendingFileTransfers = session.outstandingFileTransfers.count
+            lastStatusMessage = "Queued \(files.count) package files"
+        } catch {
+            lastStatusMessage = "Transfer failed: \(error.localizedDescription)"
+        }
+    }
+
+    private func metadataPayload(package: PetPackage, selectedAction: PetAction) -> [String: Any] {
+        [
             "kind": "watchpet.package.selection",
             "packageId": package.id,
             "name": package.name,
@@ -43,31 +99,38 @@ final class CompanionWatchSyncManager: NSObject, ObservableObject {
             "selectedAction": selectedAction.rawValue,
             "sentAt": Date().timeIntervalSince1970
         ]
+    }
 
-        do {
-            try session.updateApplicationContext(payload)
-            lastStatusMessage = "已保存同步上下文：\(package.name)"
-        } catch {
-            lastStatusMessage = "同步上下文失败：\(error.localizedDescription)"
+    private func packageTransferFiles(package: PetPackage) throws -> [(url: URL, relativePath: String)] {
+        let root = package.rootURL
+        var isDirectory: ObjCBool = false
+        guard FileManager.default.fileExists(atPath: root.path, isDirectory: &isDirectory), isDirectory.boolValue else {
+            return []
         }
 
-        guard session.isReachable else { return }
-        session.sendMessage(payload, replyHandler: { [weak self] reply in
-            Task { @MainActor in
-                let ok = (reply["ok"] as? Bool) == true
-                self?.lastStatusMessage = ok ? "手表已接收：\(package.name)" : "手表回复异常"
-            }
-        }, errorHandler: { [weak self] error in
-            Task { @MainActor in
-                self?.lastStatusMessage = "实时发送失败：\(error.localizedDescription)"
-            }
-        })
+        let resourceKeys: [URLResourceKey] = [.isRegularFileKey]
+        guard let enumerator = FileManager.default.enumerator(
+            at: root,
+            includingPropertiesForKeys: resourceKeys,
+            options: [.skipsHiddenFiles]
+        ) else { return [] }
+
+        var files: [(URL, String)] = []
+        for case let url as URL in enumerator {
+            let values = try url.resourceValues(forKeys: Set(resourceKeys))
+            guard values.isRegularFile == true else { continue }
+            let relativePath = url.path.replacingOccurrences(of: root.path + "/", with: "")
+            guard relativePath == "manifest.json" || relativePath.hasSuffix(".png") else { continue }
+            files.append((url, relativePath))
+        }
+        return files.sorted { lhs, rhs in lhs.1.localizedStandardCompare(rhs.1) == .orderedAscending }
     }
 
     private func refreshSessionState(_ session: WCSession) {
         isPaired = session.isPaired
         isWatchAppInstalled = session.isWatchAppInstalled
         isReachable = session.isReachable
+        pendingFileTransfers = session.outstandingFileTransfers.count
     }
 }
 
@@ -80,9 +143,9 @@ extension CompanionWatchSyncManager: WCSessionDelegate {
         Task { @MainActor in
             self.refreshSessionState(session)
             if let error {
-                self.lastStatusMessage = "WatchConnectivity 启动失败：\(error.localizedDescription)"
+                self.lastStatusMessage = "WatchConnectivity activation failed: \(error.localizedDescription)"
             } else {
-                self.lastStatusMessage = "WatchConnectivity 已启动：\(activationState.rawValue)"
+                self.lastStatusMessage = "WatchConnectivity activated: \(activationState.rawValue)"
             }
         }
     }
@@ -96,6 +159,17 @@ extension CompanionWatchSyncManager: WCSessionDelegate {
     nonisolated func sessionReachabilityDidChange(_ session: WCSession) {
         Task { @MainActor in
             self.refreshSessionState(session)
+        }
+    }
+
+    nonisolated func session(_ session: WCSession, didFinish fileTransfer: WCSessionFileTransfer, error: Error?) {
+        Task { @MainActor in
+            self.refreshSessionState(session)
+            if let error {
+                self.lastStatusMessage = "Transfer failed: \(error.localizedDescription)"
+            } else {
+                self.lastStatusMessage = "File transfer finished; pending \(session.outstandingFileTransfers.count)"
+            }
         }
     }
 }

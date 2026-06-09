@@ -17,6 +17,8 @@
 		35CF3919EF034832BD499488 /* WatchPetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A17360A0C50425198352C19 /* WatchPetApp.swift */; };
 		347E5D3A0D794A58AD352444 /* WatchPetAssets in Resources */ = {isa = PBXBuildFile; fileRef = 4C0A87D3FD5F4A83B137BECA /* WatchPetAssets */; };
 		BDAB6496FA1745B0B011C5B2 /* WatchCompanionSyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B47A3C356D46D284B8BE8C /* WatchCompanionSyncManager.swift */; };
+		BD382D799D5A4B4AA40B0B58 /* ImportedPetPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E925974A1E44A0997D72372 /* ImportedPetPackage.swift */; };
+		CA17940FF8214E41AF25492B /* WatchPetResourceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51084EC3E1A7402C9048DDFC /* WatchPetResourceStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		4C0A87D3FD5F4A83B137BECA /* WatchPetAssets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = WatchPetAssets; sourceTree = "<group>"; };
 		8BA5594226CA4503A5D9D6B3 /* WatchPet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchPet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47B47A3C356D46D284B8BE8C /* WatchCompanionSyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchCompanionSyncManager.swift; sourceTree = "<group>"; };
+		5E925974A1E44A0997D72372 /* ImportedPetPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportedPetPackage.swift; sourceTree = "<group>"; };
+		51084EC3E1A7402C9048DDFC /* WatchPetResourceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchPetResourceStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +70,8 @@
 				4A17360A0C50425198352C19,
 				4C0A87D3FD5F4A83B137BECA,
 				47B47A3C356D46D284B8BE8C /* WatchCompanionSyncManager.swift */,
+				5E925974A1E44A0997D72372 /* ImportedPetPackage.swift */,
+				51084EC3E1A7402C9048DDFC /* WatchPetResourceStore.swift */,
 
 			);
 			path = WatchPet;
@@ -152,6 +158,8 @@
 				DD684AB75FD34FE3A44B9AD3,
 				35CF3919EF034832BD499488,
 				BDAB6496FA1745B0B011C5B2 /* WatchCompanionSyncManager.swift in Sources */,
+				BD382D799D5A4B4AA40B0B58 /* ImportedPetPackage.swift in Sources */,
+				CA17940FF8214E41AF25492B /* WatchPetResourceStore.swift in Sources */,
 
 			);
 			runOnlyForDeploymentPostprocessing = 0;

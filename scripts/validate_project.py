@@ -10,10 +10,13 @@ required = [
     'WatchPetCompanion.xcodeproj/project.pbxproj',
     'WatchPet/WatchPetApp.swift',
     'WatchPet/WatchCompanionSyncManager.swift',
+    'WatchPet/ImportedPetPackage.swift',
+    'WatchPet/WatchPetResourceStore.swift',
     'WatchPetCompanion/WatchPetCompanionApp.swift',
     'WatchPetCompanion/Models/PetPackage.swift',
     'WatchPetCompanion/Services/WatchPetPackageLoader.swift',
     'WatchPetCompanion/Services/CompanionWatchSyncManager.swift',
+    'WatchPetCompanion/Services/PetPackageLibrary.swift',
     'WatchPetCompanion/Views/ContentView.swift',
     'WatchPetCompanion/Views/SpriteAnimationView.swift',
     'WatchPetCompanion/Resources/mochi.watchpet/manifest.json',
@@ -24,6 +27,10 @@ required = [
     'WatchPet/HealthStepProvider.swift',
     'WatchPet/Assets.xcassets/Contents.json',
     'WatchPet/WatchPetAssets/manifest.example.json',
+    'scripts/watchpet_tool.py',
+    'scripts/generate_watchpet_local.py',
+    'WatchPetWidget/WatchPetWidget.swift',
+    'docs/10_IWATCH_TESTING_GUIDE.md',
     'docs/00_MASTER_PLAN.md',
     'docs/01_PRD.md',
     'docs/02_WATCHPET_PACKAGE_SPEC.md',
@@ -59,7 +66,3 @@ if missing_assets:
 
 print('WatchPet repository validation passed.')
 print('Root:', root)
-
-
-
-

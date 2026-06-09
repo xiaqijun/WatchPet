@@ -5,6 +5,7 @@
 	objectVersion = 56;
 	objects = {
 /* Begin PBXBuildFile section */
+		0F0F0F0F0F0F0F0F0F0F0F01 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 0F0F0F0F0F0F0F0F0F0F0F02 /* ZIPFoundation */; };
 		F5C971DE421443BD9717748F /* WatchPetCompanionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A286BE5A7E364265955A34A6 /* WatchPetCompanionApp.swift */; };
 		A52CEB5639F34E40A314B004 /* PetPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED3185A597643BE8149343F /* PetPackage.swift */; };
 		9B4E9473AEBC44F79E05967E /* WatchPetPackageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC9D04DD874E84875C8768 /* WatchPetPackageLoader.swift */; };
@@ -14,6 +15,7 @@
 		69727B67624B47F78E7703F7 /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = B761DBDDBA964E6394EF8CD4 /* Resources */; };
 		2722EA1193FD42A79FB91BED /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 1242F13F46FB48F7816D174C /* PrivacyInfo.xcprivacy */; };
 		BE05632A3E904E27A3035FCE /* CompanionWatchSyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063DF5E2552E4616865BD862 /* CompanionWatchSyncManager.swift */; };
+		0064F5FD2EB84085A8E5FBCF /* PetPackageLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920A7F11FB7147CABA95E51A /* PetPackageLibrary.swift */; };
 /* End PBXBuildFile section */
 /* Begin PBXFileReference section */
 		A286BE5A7E364265955A34A6 /* WatchPetCompanionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchPetCompanionApp.swift; sourceTree = "<group>"; };
@@ -26,9 +28,10 @@
 		1242F13F46FB48F7816D174C /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		B14F0684625247F9990C6237 /* WatchPetCompanion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchPetCompanion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		063DF5E2552E4616865BD862 /* CompanionWatchSyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanionWatchSyncManager.swift; sourceTree = "<group>"; };
+		920A7F11FB7147CABA95E51A /* PetPackageLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetPackageLibrary.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 /* Begin PBXFrameworksBuildPhase section */
-		F854F6BEA3184564B588BAAF /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		F854F6BEA3184564B588BAAF /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (0F0F0F0F0F0F0F0F0F0F0F01 /* ZIPFoundation in Frameworks */,); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXFrameworksBuildPhase section */
 /* Begin PBXGroup section */
 		EAE8426BBAB94A8498A72BEA = {isa = PBXGroup; children = (5E4AE41B460B4BFE8EE1B73A /* WatchPetCompanion */, D03EE45272FC4917A32744C5 /* Products */,); sourceTree = "<group>"; };
@@ -47,6 +50,7 @@
 		6F566E8B4ADF47E0971F3114 /* Services */ = {isa = PBXGroup; children = (
 				76EC9D04DD874E84875C8768 /* WatchPetPackageLoader.swift */,
 				063DF5E2552E4616865BD862 /* CompanionWatchSyncManager.swift */,
+				920A7F11FB7147CABA95E51A /* PetPackageLibrary.swift */,
 
 			); path = Services; sourceTree = "<group>"; };
 		56E9BA2B908B4AA6ACBFC456 /* Views */ = {isa = PBXGroup; children = (
@@ -56,10 +60,10 @@
 		D03EE45272FC4917A32744C5 /* Products */ = {isa = PBXGroup; children = (B14F0684625247F9990C6237 /* WatchPetCompanion.app */,); name = Products; sourceTree = "<group>"; };
 /* End PBXGroup section */
 /* Begin PBXNativeTarget section */
-		537D0F4FF3A34AC48065DF59 /* WatchPetCompanion */ = {isa = PBXNativeTarget; buildConfigurationList = E5FA0885AF8D48798597275A /* Build configuration list for PBXNativeTarget "WatchPetCompanion" */; buildPhases = (9213C21BD5D144179DA2F0B0 /* Sources */, F854F6BEA3184564B588BAAF /* Frameworks */, 5889E6C47B524DA78B354B7E /* Resources */,); buildRules = (); dependencies = (); name = WatchPetCompanion; productName = WatchPetCompanion; productReference = B14F0684625247F9990C6237 /* WatchPetCompanion.app */; productType = "com.apple.product-type.application"; };
+		537D0F4FF3A34AC48065DF59 /* WatchPetCompanion */ = {isa = PBXNativeTarget; buildConfigurationList = E5FA0885AF8D48798597275A /* Build configuration list for PBXNativeTarget "WatchPetCompanion" */; buildPhases = (9213C21BD5D144179DA2F0B0 /* Sources */, F854F6BEA3184564B588BAAF /* Frameworks */, 5889E6C47B524DA78B354B7E /* Resources */,); buildRules = (); dependencies = (); name = WatchPetCompanion; packageProductDependencies = (0F0F0F0F0F0F0F0F0F0F0F02 /* ZIPFoundation */,); productName = WatchPetCompanion; productReference = B14F0684625247F9990C6237 /* WatchPetCompanion.app */; productType = "com.apple.product-type.application"; };
 /* End PBXNativeTarget section */
 /* Begin PBXProject section */
-		AEF67ADB8C334E9B92858A9C /* Project object */ = {isa = PBXProject; attributes = {BuildIndependentTargetsInParallel = 1; LastSwiftUpdateCheck = 1600; LastUpgradeCheck = 1600; TargetAttributes = {537D0F4FF3A34AC48065DF59 = {CreatedOnToolsVersion = 16.0; }; }; }; buildConfigurationList = BA10328D8F6A4AB18FC3CA1E /* Build configuration list for PBXProject "WatchPetCompanion" */; compatibilityVersion = "Xcode 14.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, Base); mainGroup = EAE8426BBAB94A8498A72BEA; productRefGroup = D03EE45272FC4917A32744C5 /* Products */; projectDirPath = ""; projectRoot = ""; targets = (537D0F4FF3A34AC48065DF59 /* WatchPetCompanion */,); };
+		AEF67ADB8C334E9B92858A9C /* Project object */ = {isa = PBXProject; attributes = {BuildIndependentTargetsInParallel = 1; LastSwiftUpdateCheck = 1600; LastUpgradeCheck = 1600; TargetAttributes = {537D0F4FF3A34AC48065DF59 = {CreatedOnToolsVersion = 16.0; }; }; }; buildConfigurationList = BA10328D8F6A4AB18FC3CA1E /* Build configuration list for PBXProject "WatchPetCompanion" */; compatibilityVersion = "Xcode 14.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, Base); mainGroup = EAE8426BBAB94A8498A72BEA; packageReferences = (0F0F0F0F0F0F0F0F0F0F0F03 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,); productRefGroup = D03EE45272FC4917A32744C5 /* Products */; projectDirPath = ""; projectRoot = ""; targets = (537D0F4FF3A34AC48065DF59 /* WatchPetCompanion */,); };
 /* End PBXProject section */
 /* Begin PBXResourcesBuildPhase section */
 		5889E6C47B524DA78B354B7E /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (
@@ -76,9 +80,16 @@
 				6D74E247F973441B93D3CB78 /* ContentView.swift in Sources */,
 				D4289136FDBF453EB413E33E /* SpriteAnimationView.swift in Sources */,
 				BE05632A3E904E27A3035FCE /* CompanionWatchSyncManager.swift in Sources */,
+				0064F5FD2EB84085A8E5FBCF /* PetPackageLibrary.swift in Sources */,
 
 			); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXSourcesBuildPhase section */
+/* Begin XCRemoteSwiftPackageReference section */
+		0F0F0F0F0F0F0F0F0F0F0F03 /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {isa = XCRemoteSwiftPackageReference; repositoryURL = "https://github.com/weichsel/ZIPFoundation.git"; requirement = {kind = upToNextMajorVersion; minimumVersion = 0.9.20; }; };
+/* End XCRemoteSwiftPackageReference section */
+/* Begin XCSwiftPackageProductDependency section */
+		0F0F0F0F0F0F0F0F0F0F0F02 /* ZIPFoundation */ = {isa = XCSwiftPackageProductDependency; package = 0F0F0F0F0F0F0F0F0F0F0F03 /* XCRemoteSwiftPackageReference "ZIPFoundation" */; productName = ZIPFoundation; };
+/* End XCSwiftPackageProductDependency section */
 /* Begin XCBuildConfiguration section */
 		71F9ADC01ECA44FA9070C9AA /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ANALYZER_NONNULL = YES; CLANG_ENABLE_MODULES = YES; CLANG_ENABLE_OBJC_ARC = YES; CLANG_WARN_BOOL_CONVERSION = YES; CLANG_WARN_CONSTANT_CONVERSION = YES; CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES; CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR; CLANG_WARN_EMPTY_BODY = YES; CLANG_WARN_ENUM_CONVERSION = YES; CLANG_WARN_INT_CONVERSION = YES; CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR; CLANG_WARN_UNREACHABLE_CODE = YES; COPY_PHASE_STRIP = NO; DEBUG_INFORMATION_FORMAT = dwarf; ENABLE_STRICT_OBJC_MSGSEND = YES; ENABLE_TESTABILITY = YES; GCC_C_LANGUAGE_STANDARD = gnu17; GCC_DYNAMIC_NO_PIC = NO; GCC_NO_COMMON_BLOCKS = YES; GCC_OPTIMIZATION_LEVEL = 0; GCC_PREPROCESSOR_DEFINITIONS = ("DEBUG=1", "$(inherited)"); GCC_WARN_64_TO_32_BIT_CONVERSION = YES; GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR; GCC_WARN_UNDECLARED_SELECTOR = YES; GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE; GCC_WARN_UNUSED_FUNCTION = YES; GCC_WARN_UNUSED_VARIABLE = YES; IPHONEOS_DEPLOYMENT_TARGET = 17.0; MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE; MTL_FAST_MATH = YES; ONLY_ACTIVE_ARCH = YES; SDKROOT = iphoneos; SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG; SWIFT_OPTIMIZATION_LEVEL = "-Onone"; }; name = Debug; };
 		B68CF352C1EC4B2AB22F3571 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ANALYZER_NONNULL = YES; CLANG_ENABLE_MODULES = YES; CLANG_ENABLE_OBJC_ARC = YES; COPY_PHASE_STRIP = NO; DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym"; ENABLE_NS_ASSERTIONS = NO; ENABLE_STRICT_OBJC_MSGSEND = YES; GCC_C_LANGUAGE_STANDARD = gnu17; GCC_NO_COMMON_BLOCKS = YES; GCC_WARN_64_TO_32_BIT_CONVERSION = YES; GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR; GCC_WARN_UNDECLARED_SELECTOR = YES; GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE; GCC_WARN_UNUSED_FUNCTION = YES; GCC_WARN_UNUSED_VARIABLE = YES; IPHONEOS_DEPLOYMENT_TARGET = 17.0; MTL_ENABLE_DEBUG_INFO = NO; MTL_FAST_MATH = YES; SDKROOT = iphoneos; SWIFT_COMPILATION_MODE = wholemodule; }; name = Release; };

@@ -9,11 +9,11 @@ enum WatchPetPackageError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .missingManifest(let url): return "manifest.json ????\(url.path)"
-        case .unsupportedFormat(let format): return "???????\(format)"
-        case .unsupportedVersion(let version): return "???????\(version)"
-        case .missingAnimation(let action): return "?????\(action)"
-        case .missingFrames(let action): return "???? PNG ??\(action)"
+        case .missingManifest(let url): return "manifest.json not found at \(url.path)"
+        case .unsupportedFormat(let format): return "Unsupported package format: \(format)"
+        case .unsupportedVersion(let version): return "Unsupported package version: \(version)"
+        case .missingAnimation(let action): return "Missing required animation: \(action)"
+        case .missingFrames(let action): return "No PNG frames found for animation: \(action)"
         }
     }
 }

@@ -43,18 +43,17 @@ enum PetAction: String, Codable, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .idle: return "??"
-        case .happy: return "??"
-        case .hungry: return "??"
-        case .eat: return "???"
-        case .sleep: return "??"
-        case .pet: return "??"
-        case .sad: return "??"
-        case .levelUp: return "??"
+        case .idle: return "Idle"
+        case .happy: return "Happy"
+        case .hungry: return "Hungry"
+        case .eat: return "Eat"
+        case .sleep: return "Sleep"
+        case .pet: return "Pet"
+        case .sad: return "Sad"
+        case .levelUp: return "Level Up"
         }
     }
 }
-
 struct PetPackageManifest: Codable {
     let format: String
     let formatVersion: String
