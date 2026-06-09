@@ -13,7 +13,7 @@ struct ContentView: View {
             PetSpriteView(action: store.currentAction)
                 .frame(width: 128, height: 128)
                 .onTapGesture {
-                    store.pet()
+                    store.strokePet()
                     WKInterfaceDevice.current().play(.click)
                 }
 
@@ -80,3 +80,4 @@ struct MeterRow: View {
     ContentView()
         .environmentObject(PetStore.preview)
 }
+

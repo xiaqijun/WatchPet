@@ -33,7 +33,7 @@ final class PetStore: ObservableObject {
         temporaryAction(.eat)
     }
 
-    func pet() {
+    func strokePet() {
         pet.mood = min(100, pet.mood + 12)
         pet.energy = max(0, pet.energy - 2)
         pet.lastCareAt = Date()
@@ -121,3 +121,4 @@ extension PetStore {
         return store
     }
 }
+
