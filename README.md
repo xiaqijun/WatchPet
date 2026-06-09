@@ -52,7 +52,7 @@ WatchPet/
 - [`.watchpet` 宠物包规范](docs/02_WATCHPET_PACKAGE_SPEC.md)
 - [AI 生成规划](docs/03_AI_GENERATION_PLAN.md)
 - [开发执行计划](docs/04_DEVELOPMENT_PLAN.md)
-- [交付清单](docs/05_DELIVERY_CHECKLIST.md)
+- [交付清单](docs/05_DELIVERY_CHECKLIST.md)`n- [无 Mac 设备开发指南](docs/06_NO_MAC_DEVELOPMENT_GUIDE.md)
 
 ## 当前限制
 
@@ -64,3 +64,4 @@ WatchPet/
 ## License
 
 MIT
+

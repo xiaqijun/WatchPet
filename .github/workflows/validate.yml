@@ -1,0 +1,45 @@
+﻿name: Validate WatchPet
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate-assets-and-docs:
+    name: Validate project files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Validate repository structure
+        run: python scripts/validate_project.py
+
+  xcode-watchos-build:
+    name: Xcode watchOS build check
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: List project targets
+        run: xcodebuild -list -project WatchPet.xcodeproj
+
+      - name: Build WatchPet for watchOS Simulator
+        run: |
+          xcodebuild \
+            -project WatchPet.xcodeproj \
+            -scheme WatchPet \
+            -configuration Debug \
+            -destination 'generic/platform=watchOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO \
+            build
