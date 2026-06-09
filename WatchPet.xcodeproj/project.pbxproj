@@ -16,6 +16,7 @@
 		206ED203813543D09BC8EE25 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 07C1B8655EAE4D17A65D5501 /* PrivacyInfo.xcprivacy */; };
 		35CF3919EF034832BD499488 /* WatchPetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A17360A0C50425198352C19 /* WatchPetApp.swift */; };
 		347E5D3A0D794A58AD352444 /* WatchPetAssets in Resources */ = {isa = PBXBuildFile; fileRef = 4C0A87D3FD5F4A83B137BECA /* WatchPetAssets */; };
+		BDAB6496FA1745B0B011C5B2 /* WatchCompanionSyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B47A3C356D46D284B8BE8C /* WatchCompanionSyncManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		4A17360A0C50425198352C19 /* WatchPetApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchPetApp.swift; sourceTree = "<group>"; };
 		4C0A87D3FD5F4A83B137BECA /* WatchPetAssets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = WatchPetAssets; sourceTree = "<group>"; };
 		8BA5594226CA4503A5D9D6B3 /* WatchPet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchPet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		47B47A3C356D46D284B8BE8C /* WatchCompanionSyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchCompanionSyncManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,8 @@
 				08EAB207C949460091C648CA,
 				4A17360A0C50425198352C19,
 				4C0A87D3FD5F4A83B137BECA,
+				47B47A3C356D46D284B8BE8C /* WatchCompanionSyncManager.swift */,
+
 			);
 			path = WatchPet;
 			sourceTree = "<group>";
@@ -147,6 +151,8 @@
 				4C0D825105EE440390C04CD0,
 				DD684AB75FD34FE3A44B9AD3,
 				35CF3919EF034832BD499488,
+				BDAB6496FA1745B0B011C5B2 /* WatchCompanionSyncManager.swift in Sources */,
+
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,3 +334,4 @@
 	};
 	rootObject = D8C1CABF38434B829EE4027C /* Project object */;
 }
+

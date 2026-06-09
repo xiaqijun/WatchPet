@@ -1,4 +1,4 @@
-﻿// !$*UTF8*$!
+// !$*UTF8*$!
 {
 	archiveVersion = 1;
 	classes = {};
@@ -13,6 +13,7 @@
 		40D171AF90BB487989CA4B37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E77C99683BE4CED88A4F0B8 /* Assets.xcassets */; };
 		69727B67624B47F78E7703F7 /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = B761DBDDBA964E6394EF8CD4 /* Resources */; };
 		2722EA1193FD42A79FB91BED /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 1242F13F46FB48F7816D174C /* PrivacyInfo.xcprivacy */; };
+		BE05632A3E904E27A3035FCE /* CompanionWatchSyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063DF5E2552E4616865BD862 /* CompanionWatchSyncManager.swift */; };
 /* End PBXBuildFile section */
 /* Begin PBXFileReference section */
 		A286BE5A7E364265955A34A6 /* WatchPetCompanionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchPetCompanionApp.swift; sourceTree = "<group>"; };
@@ -24,6 +25,7 @@
 		B761DBDDBA964E6394EF8CD4 /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources; sourceTree = "<group>"; };
 		1242F13F46FB48F7816D174C /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		B14F0684625247F9990C6237 /* WatchPetCompanion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchPetCompanion.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		063DF5E2552E4616865BD862 /* CompanionWatchSyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanionWatchSyncManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 /* Begin PBXFrameworksBuildPhase section */
 		F854F6BEA3184564B588BAAF /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
@@ -44,6 +46,8 @@
 			); path = Models; sourceTree = "<group>"; };
 		6F566E8B4ADF47E0971F3114 /* Services */ = {isa = PBXGroup; children = (
 				76EC9D04DD874E84875C8768 /* WatchPetPackageLoader.swift */,
+				063DF5E2552E4616865BD862 /* CompanionWatchSyncManager.swift */,
+
 			); path = Services; sourceTree = "<group>"; };
 		56E9BA2B908B4AA6ACBFC456 /* Views */ = {isa = PBXGroup; children = (
 				038B3B6F9D4F4A1C9408A35E /* ContentView.swift */,
@@ -71,6 +75,8 @@
 				9B4E9473AEBC44F79E05967E /* WatchPetPackageLoader.swift in Sources */,
 				6D74E247F973441B93D3CB78 /* ContentView.swift in Sources */,
 				D4289136FDBF453EB413E33E /* SpriteAnimationView.swift in Sources */,
+				BE05632A3E904E27A3035FCE /* CompanionWatchSyncManager.swift in Sources */,
+
 			); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXSourcesBuildPhase section */
 /* Begin XCBuildConfiguration section */
@@ -86,4 +92,5 @@
 	};
 	rootObject = AEF67ADB8C334E9B92858A9C /* Project object */;
 }
+
 

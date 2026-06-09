@@ -3,6 +3,7 @@ import WatchKit
 
 struct ContentView: View {
     @EnvironmentObject private var store: PetStore
+    @EnvironmentObject private var syncManager: WatchCompanionSyncManager
 
     var body: some View {
         VStack(spacing: 8) {
@@ -16,6 +17,8 @@ struct ContentView: View {
                     store.strokePet()
                     WKInterfaceDevice.current().play(.click)
                 }
+
+            syncSummary
 
             statusBars
 
@@ -41,13 +44,32 @@ struct ContentView: View {
 
     private var header: some View {
         HStack {
-            Text(store.pet.name)
-                .font(.headline)
-                .lineLimit(1)
+            VStack(alignment: .leading, spacing: 1) {
+                Text(syncManager.syncedPackage?.name ?? store.pet.name)
+                    .font(.headline)
+                    .lineLimit(1)
+                if let synced = syncManager.syncedPackage {
+                    Text("来自 iPhone · \(synced.selectedAction)")
+                        .font(.system(size: 8))
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                }
+            }
             Spacer()
             Text("Lv.\(store.pet.level)")
                 .font(.caption)
                 .foregroundStyle(.secondary)
+        }
+    }
+
+    private var syncSummary: some View {
+        Group {
+            if syncManager.syncedPackage != nil {
+                Text(syncManager.lastStatusMessage)
+                    .font(.system(size: 9))
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
+            }
         }
     }
 
@@ -79,5 +101,5 @@ struct MeterRow: View {
 #Preview {
     ContentView()
         .environmentObject(PetStore.preview)
+        .environmentObject(WatchCompanionSyncManager())
 }
-
