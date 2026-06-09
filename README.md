@@ -1,70 +1,100 @@
-﻿# WatchPet
+# WatchPet
 
-WatchPet 是一个 Apple Watch 随身电子宠物项目：用户可以把真实宠物照片转化为轻量 2D 动画宠物，在 Apple Watch 上摸摸、喂食、睡觉、陪玩和通过步数升级。
+WatchPet is an Apple Watch virtual pet project. It turns a pet photo or a `.watchpet` asset package into a lightweight 2D animated pet that can live on Apple Watch.
 
-> 当前仓库是 MVP/设计验证版本：包含 watchOS 本地 Demo、占位宠物动画素材、`.watchpet` 资源包规范、AI 生成流程规划和完整开发路线图。
+The repository now includes a watchOS app, an iPhone Companion app, `.watchpet` package tooling, iPhone-to-Watch resource transfer, a Widget/Complication target, and no-Mac/TestFlight preparation docs.
 
-## 当前完成内容
+## Current features
 
-- Apple Watch 独立 App 代码骨架`n- iPhone Companion App 代码骨架和示例 `.watchpet` 预览界面`n- WatchConnectivity 同步骨架：iPhone 发送宠物包元数据，Watch 接收并显示
-- SwiftUI 宠物主界面
-- 宠物状态：饥饿值、心情、精力、经验、等级
-- 互动：摸摸、喂食、睡觉
-- 动作：idle / happy / hungry / eat / sleep / pet / sad / levelUp
-- HealthKit 步数经验接口骨架
-- 占位 PNG 帧动画资源
-- `.watchpet` manifest 示例
-- 完整产品/技术/生成/开发规划文档`n- `.watchpet` 打包/校验/解包工具：`scripts/watchpet_tool.py``n- 示例宠物包：`examples/mochi.watchpet`
+- Apple Watch app: pet animation, meters, pet/feed/sleep interactions, local state persistence.
+- HealthKit step-count experience skeleton.
+- iPhone Companion app: preview pet package animations, import packages, send the selected pet to Apple Watch.
+- WatchConnectivity: sync pet metadata and transfer `manifest.json` plus PNG animation resources.
+- `.watchpet` tooling: validate, pack, unpack, scaffold.
+- Direct `.watchpet` zip import on iPhone: supports `.watchpet`, `.zip`, and unpacked folders.
+- Local generation MVP: create an 8-action `.watchpet` package from one image without an API key.
+- Watch Widget / Complication: standalone WidgetKit extension project.
+- GitHub Actions: validates Python tools and builds watchOS, iOS Companion, and watchOS Widget projects on macOS runners.
 
-## 项目结构
+## Project structure
 
 ```text
 WatchPet/
-├── WatchPet.xcodeproj              # Apple Watch Xcode 项目结构`n├── WatchPetCompanion.xcodeproj     # iPhone Companion Xcode 项目结构
-├── WatchPet/                       # watchOS App 源码和资源
-│   ├── WatchPetApp.swift
-│   ├── ContentView.swift
-│   ├── PetModel.swift
-│   ├── PetStore.swift
-│   ├── PetSpriteView.swift
-│   ├── HealthStepProvider.swift
-│   ├── Assets.xcassets/
-│   └── WatchPetAssets/manifest.example.json
-├── WatchPetCompanion/              # iPhone Companion 源码和示例包预览`n├── WatchPetWidget/                 # Widget/Complication 后续 target 骨架
-├── docs/                           # 完整规划文档
-├── scripts/                        # 验证脚本
-└── examples/                       # 示例资源包/配置
+??? WatchPet.xcodeproj              # Apple Watch app Xcode project
+??? WatchPetCompanion.xcodeproj     # iPhone Companion Xcode project
+??? WatchPetWidget.xcodeproj        # watchOS Widget/Complication Xcode project
+??? WatchPet/                       # watchOS app source and assets
+??? WatchPetCompanion/              # iPhone Companion source and bundled sample package
+??? WatchPetWidget/                 # WidgetKit extension source and assets
+??? docs/                           # product, technical, no-Mac, and TestFlight docs
+??? scripts/                        # package tools, generator, repository validation
+??? examples/                       # sample .watchpet package and unpacked package
 ```
 
-## 如何运行
+## Local tool usage
 
-1. 在 macOS 上安装 Xcode。
-2. 打开 `WatchPet.xcodeproj`。
-3. 设置 Team 与 Bundle Identifier。
-4. 选择 `WatchPet` scheme。
-5. 运行到 Apple Watch Simulator 或 Apple Watch 真机。
-6. 如果不想测试步数，可先在 `PetStore.bootstrap()` 注释 HealthKit 调用。
+Validate the repository and sample package:
 
-## 文档入口
+```bash
+python scripts/validate_project.py
+python scripts/watchpet_tool.py validate examples/mochi.watchpet
+```
 
-- [总规划](docs/00_MASTER_PLAN.md)
-- [PRD](docs/01_PRD.md)
-- [`.watchpet` 宠物包规范](docs/02_WATCHPET_PACKAGE_SPEC.md)
-- [AI 生成规划](docs/03_AI_GENERATION_PLAN.md)
-- [开发执行计划](docs/04_DEVELOPMENT_PLAN.md)
-- [交付清单](docs/05_DELIVERY_CHECKLIST.md)`n- [无 Mac 设备开发指南](docs/06_NO_MAC_DEVELOPMENT_GUIDE.md)`n- [`.watchpet` 工具使用指南](docs/07_WATCHPET_TOOL_GUIDE.md)
+Pack or unpack `.watchpet` packages:
 
-## 当前限制
+```bash
+python scripts/watchpet_tool.py pack examples/mochi outputs/mochi.watchpet --force
+python scripts/watchpet_tool.py unpack examples/mochi.watchpet work/mochi --force
+```
 
-- 当前生成环境是 Windows，无法本地执行 Xcode 编译验证。
-- AppIcon 仍是占位配置，需要替换正式图标。
-- Widget 文件已提供，但还未并入 Xcode target。
-- `.watchpet` 解析器尚未实现，当前为规范与 manifest 示例。
+Generate a local MVP pet package from one image:
+
+```bash
+python scripts/generate_watchpet_local.py pet.png outputs/my-pet.watchpet --name MyPet --keep-unpacked work/my-pet
+python scripts/watchpet_tool.py validate outputs/my-pet.watchpet
+```
+
+`generate_watchpet_local.py` is an offline MVP. It does not require an API key. A future AI image provider can replace `render_frame()` while keeping the same package contract.
+
+## No-Mac development path
+
+- Daily Swift/Python/package work can continue on Windows.
+- GitHub Actions uses macOS runners to prove the Xcode projects compile.
+- Installing on a real iWatch requires Apple signing: borrowed/rented Mac direct install, or Apple Developer Program + TestFlight.
+- See `docs/10_IWATCH_TESTING_GUIDE.md` and `docs/11_TESTFLIGHT_CI_SETUP.md`.
+
+## Xcode projects
+
+The current no-Mac-friendly setup uses three independently buildable Xcode projects:
+
+1. `WatchPet.xcodeproj`: watchOS app.
+2. `WatchPetCompanion.xcodeproj`: iPhone Companion app.
+3. `WatchPetWidget.xcodeproj`: watchOS Widget/Complication.
+
+Before a real TestFlight/App Store build, replace every `com.example.*` Bundle Identifier with your own unique IDs and set your Apple Developer Team.
+
+## Documentation
+
+- `docs/00_MASTER_PLAN.md`: master plan.
+- `docs/01_PRD.md`: product requirements.
+- `docs/02_WATCHPET_PACKAGE_SPEC.md`: `.watchpet` package spec.
+- `docs/03_AI_GENERATION_PLAN.md`: AI generation plan and local MVP note.
+- `docs/04_DEVELOPMENT_PLAN.md`: development milestones.
+- `docs/05_DELIVERY_CHECKLIST.md`: delivery checklist.
+- `docs/06_NO_MAC_DEVELOPMENT_GUIDE.md`: no-Mac workflow.
+- `docs/07_WATCHPET_TOOL_GUIDE.md`: package tool guide.
+- `docs/08_IPHONE_COMPANION.md`: iPhone Companion notes.
+- `docs/09_WATCHCONNECTIVITY_SYNC.md`: sync notes.
+- `docs/10_IWATCH_TESTING_GUIDE.md`: real Apple Watch / TestFlight guide.
+- `docs/11_TESTFLIGHT_CI_SETUP.md`: TestFlight CI readiness guide.
+
+## Current limitations
+
+- This environment is Windows, so it cannot install to a real Apple Watch.
+- Real iWatch validation still needs your Apple ID, Apple Developer Program, or a usable Mac.
+- App icons are still placeholders.
+- The three Xcode projects are split for easier no-Mac CI. Before production TestFlight delivery, it is recommended to organize them into a single workspace or a standard host iOS app project.
 
 ## License
 
 MIT
-
-
-
-
