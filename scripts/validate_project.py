@@ -5,6 +5,7 @@ import json
 root = Path(__file__).resolve().parents[1]
 required = [
     'README.md',
+    '.github/workflows/testflight-readiness.yml',
     'LICENSE',
     'WatchPet.xcodeproj/project.pbxproj',
     'WatchPetCompanion.xcodeproj/project.pbxproj',

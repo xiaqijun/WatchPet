@@ -52,7 +52,18 @@ Example final IDs:
 
 This proves the code compiles, but it does not replace device signing or TestFlight upload.
 
-## Readiness check
+## Manual readiness workflow
+
+`.github/workflows/testflight-readiness.yml` can be run manually from GitHub Actions. It checks:
+
+- whether required signing/upload secrets are present;
+- whether Bundle ID and Team placeholders have been removed;
+- whether the export options template exists;
+- whether the normal repository validation still passes.
+
+By default it is non-strict and creates a report. If you run it with `strict=true`, missing credentials or placeholders make the job fail.
+
+## Local readiness check
 
 After you create Apple identifiers and update the Xcode projects, run:
 
@@ -68,16 +79,16 @@ For Windows/no-Mac development, this repository currently uses three separate Xc
 
 ```text
 WatchPetApp.xcodeproj or WatchPet.xcworkspace
-??? iOS Companion App target
-??? watchOS App target
-??? watchOS Widget Extension target
++-- iOS Companion App target
++-- watchOS App target
++-- watchOS Widget Extension target
 ```
 
 This makes App Store/TestFlight signing, versioning, App Groups, shared resources, and companion app relationships easier to manage.
 
 ## Manual archive example
 
-Run this on a Mac after configuring Team, Bundle IDs, certificate, and provisioning profile:
+Run these commands on a Mac after configuring Team, Bundle IDs, certificate, and provisioning profile:
 
 ```bash
 xcodebuild archive   -project WatchPetCompanion.xcodeproj   -scheme WatchPetCompanion   -configuration Release   -archivePath build/WatchPetCompanion.xcarchive

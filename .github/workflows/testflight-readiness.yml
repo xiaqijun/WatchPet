@@ -1,0 +1,65 @@
+name: TestFlight Readiness
+
+on:
+  workflow_dispatch:
+    inputs:
+      strict:
+        description: 'Fail when signing credentials/placeholders are missing'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+
+jobs:
+  readiness-report:
+    name: TestFlight readiness report
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Validate repository first
+        run: python scripts/validate_project.py
+
+      - name: Check signing placeholders and secrets
+        env:
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPSTORE_API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
+          APPSTORE_API_ISSUER_ID: ${{ secrets.APPSTORE_API_ISSUER_ID }}
+          APPSTORE_API_PRIVATE_KEY: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+          IOS_DIST_CERT_BASE64: ${{ secrets.IOS_DIST_CERT_BASE64 }}
+          IOS_DIST_CERT_PASSWORD: ${{ secrets.IOS_DIST_CERT_PASSWORD }}
+          IOS_PROVISION_PROFILE_BASE64: ${{ secrets.IOS_PROVISION_PROFILE_BASE64 }}
+        run: |
+          set +e
+          if [ "${{ inputs.strict }}" = "true" ]; then
+            python scripts/check_testflight_readiness.py --check-secrets --strict | tee readiness.txt
+            status=${PIPESTATUS[0]}
+          else
+            python scripts/check_testflight_readiness.py --check-secrets | tee readiness.txt
+            status=0
+          fi
+          {
+            echo "## TestFlight readiness"
+            echo
+            echo '```text'
+            cat readiness.txt
+            echo '```'
+            echo
+            echo "Strict mode: ${{ inputs.strict }}"
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit $status
+
+      - name: Show next steps
+        run: |
+          echo "1. Replace com.example.* Bundle IDs with your own IDs."
+          echo "2. Set DEVELOPMENT_TEAM in Xcode projects."
+          echo "3. Add the documented Apple signing secrets."
+          echo "4. Re-run this workflow with strict=true."

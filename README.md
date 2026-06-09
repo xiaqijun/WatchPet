@@ -20,15 +20,15 @@ The repository now includes a watchOS app, an iPhone Companion app, `.watchpet` 
 
 ```text
 WatchPet/
-??? WatchPet.xcodeproj              # Apple Watch app Xcode project
-??? WatchPetCompanion.xcodeproj     # iPhone Companion Xcode project
-??? WatchPetWidget.xcodeproj        # watchOS Widget/Complication Xcode project
-??? WatchPet/                       # watchOS app source and assets
-??? WatchPetCompanion/              # iPhone Companion source and bundled sample package
-??? WatchPetWidget/                 # WidgetKit extension source and assets
-??? docs/                           # product, technical, no-Mac, and TestFlight docs
-??? scripts/                        # package tools, generator, repository validation
-??? examples/                       # sample .watchpet package and unpacked package
++-- WatchPet.xcodeproj              # Apple Watch app Xcode project
++-- WatchPetCompanion.xcodeproj     # iPhone Companion Xcode project
++-- WatchPetWidget.xcodeproj        # watchOS Widget/Complication Xcode project
++-- WatchPet/                       # watchOS app source and assets
++-- WatchPetCompanion/              # iPhone Companion source and bundled sample package
++-- WatchPetWidget/                 # WidgetKit extension source and assets
++-- docs/                           # product, technical, no-Mac, and TestFlight docs
++-- scripts/                        # package tools, generator, repository validation
++-- examples/                       # sample .watchpet package and unpacked package
 ```
 
 ## Local tool usage
