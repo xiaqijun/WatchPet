@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 from pathlib import Path
 import json
 
@@ -30,6 +30,9 @@ required = [
     'scripts/watchpet_tool.py',
     'scripts/generate_watchpet_local.py',
     'WatchPetWidget/WatchPetWidget.swift',
+    'WatchPetWidget/Assets.xcassets/Contents.json',
+    'WatchPetWidget/Info.plist',
+    'WatchPetWidget.xcodeproj/project.pbxproj',
     'docs/10_IWATCH_TESTING_GUIDE.md',
     'docs/00_MASTER_PLAN.md',
     'docs/01_PRD.md',

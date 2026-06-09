@@ -44,3 +44,10 @@ Open WatchPet.xcodeproj -> select WatchPet scheme -> run on Apple Watch Simulato
 3. HealthKit capability。
 4. watchOS deployment target。
 5. AppIcon 缺失警告。
+
+
+## Widget / Complication ???
+
+- `WatchPetWidget.xcodeproj` ????? watchOS WidgetKit extension?
+- `WatchPetWidget/WatchPetWidget.swift` ?? accessoryCircular?accessoryRectangular?accessoryInline?
+- GitHub Actions ?? `Xcode watchOS Widget build check`???? Mac ????? Widget ???

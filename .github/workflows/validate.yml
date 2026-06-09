@@ -1,4 +1,4 @@
-﻿name: Validate WatchPet
+name: Validate WatchPet
 
 on:
   push:
@@ -47,7 +47,6 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             build
 
-
   xcode-ios-companion-build:
     name: Xcode iOS Companion build check
     runs-on: macos-latest
@@ -68,5 +67,28 @@ jobs:
             -scheme WatchPetCompanion \
             -configuration Debug \
             -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+
+  xcode-widget-build:
+    name: Xcode watchOS Widget build check
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: List widget project targets
+        run: xcodebuild -list -project WatchPetWidget.xcodeproj
+
+      - name: Build WatchPetWidget for watchOS Simulator
+        run: |
+          xcodebuild \
+            -project WatchPetWidget.xcodeproj \
+            -scheme WatchPetWidget \
+            -configuration Debug \
+            -destination 'generic/platform=watchOS Simulator' \
             CODE_SIGNING_ALLOWED=NO \
             build
