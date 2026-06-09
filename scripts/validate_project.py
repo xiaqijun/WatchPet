@@ -51,3 +51,4 @@ if missing_assets:
 print('WatchPet repository validation passed.')
 print('Root:', root)
 
+

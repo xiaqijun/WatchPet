@@ -1,0 +1,26 @@
+﻿{
+  "format": "watchpet",
+  "formatVersion": "1.0.0",
+  "id": "example-mochi-cat",
+  "name": "Mochi",
+  "species": "cat",
+  "style": "pixel-cute",
+  "author": "WatchPet",
+  "preview": "preview.png",
+  "icon": "icon.png",
+  "canvas": {
+    "width": 160,
+    "height": 160,
+    "scale": 2
+  },
+  "animations": {
+    "idle": { "path": "sprites/idle", "fps": 4, "loop": true },
+    "happy": { "path": "sprites/happy", "fps": 6, "loop": false },
+    "hungry": { "path": "sprites/hungry", "fps": 4, "loop": true },
+    "eat": { "path": "sprites/eat", "fps": 6, "loop": false },
+    "sleep": { "path": "sprites/sleep", "fps": 2, "loop": true },
+    "pet": { "path": "sprites/pet", "fps": 6, "loop": false },
+    "sad": { "path": "sprites/sad", "fps": 4, "loop": true },
+    "levelUp": { "path": "sprites/levelUp", "fps": 8, "loop": false }
+  }
+}

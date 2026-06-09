@@ -21,6 +21,9 @@ jobs:
       - name: Validate repository structure
         run: python scripts/validate_project.py
 
+      - name: Validate example watchpet package
+        run: python scripts/watchpet_tool.py validate examples/mochi.watchpet
+
   xcode-watchos-build:
     name: Xcode watchOS build check
     runs-on: macos-latest
@@ -43,3 +46,4 @@ jobs:
             -destination 'generic/platform=watchOS Simulator' \
             CODE_SIGNING_ALLOWED=NO \
             build
+

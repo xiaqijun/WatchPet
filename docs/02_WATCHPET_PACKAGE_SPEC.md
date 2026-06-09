@@ -97,3 +97,15 @@ pet-name.watchpet
 - `1.0.0`：静态 PNG 帧动画。
 - 未来 `1.1.0`：可加入音效、动作标签、道具适配。
 - 未来 `2.0.0`：可加入骨骼动画或矢量动画，但不建议用于 MVP。
+
+## 参考实现
+
+仓库提供 Python 参考工具：
+
+```bash
+python scripts/watchpet_tool.py validate examples/mochi.watchpet
+python scripts/watchpet_tool.py pack examples/mochi examples/mochi.watchpet --force
+python scripts/watchpet_tool.py unpack examples/mochi.watchpet examples/mochi-unpacked --force
+```
+
+详见 `docs/07_WATCHPET_TOOL_GUIDE.md`。
