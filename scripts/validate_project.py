@@ -7,7 +7,14 @@ required = [
     'README.md',
     'LICENSE',
     'WatchPet.xcodeproj/project.pbxproj',
+    'WatchPetCompanion.xcodeproj/project.pbxproj',
     'WatchPet/WatchPetApp.swift',
+    'WatchPetCompanion/WatchPetCompanionApp.swift',
+    'WatchPetCompanion/Models/PetPackage.swift',
+    'WatchPetCompanion/Services/WatchPetPackageLoader.swift',
+    'WatchPetCompanion/Views/ContentView.swift',
+    'WatchPetCompanion/Views/SpriteAnimationView.swift',
+    'WatchPetCompanion/Resources/mochi.watchpet/manifest.json',
     'WatchPet/ContentView.swift',
     'WatchPet/PetModel.swift',
     'WatchPet/PetStore.swift',
@@ -50,5 +57,6 @@ if missing_assets:
 
 print('WatchPet repository validation passed.')
 print('Root:', root)
+
 
 

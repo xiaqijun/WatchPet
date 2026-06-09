@@ -47,3 +47,26 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             build
 
+
+  xcode-ios-companion-build:
+    name: Xcode iOS Companion build check
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: List companion project targets
+        run: xcodebuild -list -project WatchPetCompanion.xcodeproj
+
+      - name: Build WatchPetCompanion for iOS Simulator
+        run: |
+          xcodebuild \
+            -project WatchPetCompanion.xcodeproj \
+            -scheme WatchPetCompanion \
+            -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO \
+            build
